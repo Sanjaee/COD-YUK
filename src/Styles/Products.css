@@ -1,0 +1,182 @@
+section {
+  font-family: arial;
+}
+
+.input {
+  width: 100%;
+  max-width: 220px;
+  height: 45px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
+  margin-left: 2px;
+}
+
+.input:hover {
+  border: 2px solid lightgrey;
+  box-shadow: 0px 0px 20px -17px;
+}
+
+.input:active {
+  transform: scale(0.95);
+}
+
+.input:focus {
+  border: 2px solid grey;
+}
+
+.store-card {
+  display: block;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-basis: calc(33.33% - 1rem);
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.store-card:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.store-card-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.store-card-image {
+  width: 100%;
+  height: 180.656px;
+  line-height: 16.1px;
+  object-fit: cover;
+}
+
+.store-card-details {
+  padding: 1rem;
+  vertical-align: middle;
+  position: relative;
+}
+
+.store-card-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.store-card-description {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.store-card-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 640px) {
+  .store-card {
+    flex-basis: calc(100% - 1rem); /* Full width for one card per row */
+    margin-right: 0;
+  }
+  .store-card-inner {
+    display: block;
+  }
+  .store-card-details {
+    padding: 12px;
+  }
+  .store-card-title {
+    font-size: 16px;
+    padding: 0px;
+    margin-bottom: 5px;
+  }
+  .store-card-description {
+    font-size: 11px;
+    padding: 0px;
+    margin: 0px;
+  }
+  .store-card-price {
+    font-size: 0.875rem;
+
+    padding: 0px;
+    margin: 0px;
+  }
+}
+
+/* Misalnya, dalam file CSS Anda */
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.green-dot {
+  background-color: green;
+}
+
+.red-dot {
+  background-color: red;
+}
+.rating {
+  display: flex;
+  margin-top: 7px;
+}
+
+.rating .fa-star {
+  color: gold; /* Ganti dengan warna yang sesuai */
+  font-size: 1.2rem; /* Sesuaikan ukuran ikon sesuai kebutuhan */
+  margin-right: 2px; /* Jarak antara ikon bintang */
+}
+.location {
+  display: flex;
+  align-items: center;
+  color: #333; /* Warna teks sesuai kebutuhan */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.location svg {
+  margin-right: 5px;
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+/* Ukuran font default */
+.lokasi {
+  font-size: 10px;
+}
+
+/* Media Query untuk perangkat mobile (misalnya ukuran layar kurang dari 768px) */
+@media (max-width: 768px) {
+  .lokasi {
+    font-size: 10px; /* Atur ukuran font untuk mobile di sini */
+  }
+  .location svg {
+    margin-right: 5px;
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+}
+
+/* Media Query untuk perangkat PC (misalnya ukuran layar lebih dari 768px) */
+@media (min-width: 769px) {
+  .lokasi {
+    font-size: 16px; /* Atur ukuran font untuk PC di sini */
+  }
+  .location svg {
+    margin-right: 5px;
+    font-size: 15px;
+    margin-top: 5px;
+  }
+}
+/* transform: translateY(-5px); */
