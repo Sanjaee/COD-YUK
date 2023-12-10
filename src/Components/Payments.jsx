@@ -102,7 +102,7 @@ const Payment = () => {
             <div className=" bg-WarnaAteng w-28 h-1 rounded-xl"></div>
           </div>
           <h1 className=" mt-5 font-bold text-lg">Catatan Si Penjual :</h1>
-          <div className="mt-4 overflow-y-auto max-h-[150px]">
+          <div className="mt-4  max-h-[150px] max-h-full">
             <ul>
               <li>{products?.about}</li>
             </ul>
