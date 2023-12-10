@@ -102,7 +102,7 @@ const Payment = () => {
             <div className=" bg-WarnaAteng w-28 h-1 rounded-xl"></div>
           </div>
           <h1 className=" mt-5 font-bold text-lg">Catatan Si Penjual :</h1>
-          <div className=" ml-5 mt-4">
+          <div className="  mt-4">
             <ul>
               <li>{products?.about}</li>
             </ul>
