@@ -96,14 +96,16 @@ const Payment = () => {
             <img
               src="/logo-white.png"
               alt=""
-              className=" w-24 rounded-xl ml-6"
+              className=" w-24 rounded-xl ml-6 mb-16"
             />
-            <h1 className=" text-center mt-7 font-bold">westjakartarentals</h1>
+
             <div className=" bg-WarnaAteng w-28 h-1 rounded-xl"></div>
           </div>
-          <h1 className=" mt-5 font-bold text-lg">Benefit:{products?.title}</h1>
+          <h1 className=" mt-5 font-bold text-lg">Catatan Si Penjual :</h1>
           <div className=" ml-5 mt-4">
-            <ul></ul>
+            <ul>
+              <li>{products?.about}</li>
+            </ul>
           </div>
           <h1 className=" font-bold text-red-500 mt-12">
             Estimasi Proses Kita Usahakan Secepatnya Minimal 12 Jam - Maximal
@@ -113,7 +115,7 @@ const Payment = () => {
         </div>
         {/* card 2 */}
         <div className="col-span-2 p-4">
-          <h1 className="text-2xl font-bold mb-4">Payment Information</h1>
+          <h1 className="text-2xl font-bold mb-4">Product Information:</h1>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium">NAMA </label>
@@ -162,7 +164,7 @@ const Payment = () => {
                   rows={4}
                 ></textarea>
                 <button className="button" id="tombol" onClick={handleWhatsApp}>
-                  <span>Pay Now via WhatsApp</span>
+                  <span>Chat Now via WhatsApp</span>
                   <svg
                     fill="#fff"
                     xmlns="http://www.w3.org/2000/svg"

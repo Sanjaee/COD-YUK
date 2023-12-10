@@ -8,6 +8,7 @@ import { faMapMarker, faStar } from "@fortawesome/free-solid-svg-icons";
 import Slider from "react-slick";
 import { Navbar } from "../Components/Navbar";
 import Payment from "../Components/Payments";
+import ServiceIcon from "../Components/Popup/IconService";
 
 const DetailProdutcs = () => {
   const { id } = useParams();
@@ -107,6 +108,7 @@ const DetailProdutcs = () => {
         )}
       </div>
       <Payment />
+      <ServiceIcon />
     </div>
   );
 };

@@ -1,0 +1,34 @@
+.service-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px; /* Sesuaikan ukuran dengan kebutuhan Anda */
+  height: 40px; /* Sesuaikan ukuran dengan kebutuhan Anda */
+  background-color: #25d366; /* Ganti dengan warna yang Anda inginkan */
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Efek bayangan yang halus */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    /* Ganti warna background dan efek transform sesuai keinginan Anda */
+    background-color: #8de8ae;
+    transform: scale(1.1);
+
+    /* Tampilkan teks samping */
+    &::before {
+      content: "Customer Service"; /* Teks yang akan muncul */
+      display: block;
+      position: absolute;
+      right: 50px; /* Sesuaikan jarak dari ikon */
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #222831; /* Warna latar belakang teks */
+      padding: 8px;
+      color: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Efek bayangan yang halus */
+      text-align: center;
+    }
+  }
+}
