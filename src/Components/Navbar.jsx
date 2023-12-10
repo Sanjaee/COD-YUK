@@ -7,21 +7,18 @@ export const Navbar = () => {
 
   function toggleSidebar(e) {
     e.preventDefault();
-    if (sidebarVisible) {
-      setSidebarVisible(false); // Menutup sidebar jika sudah terbuka
-    } else {
-      setSidebarVisible(true); // Membuka sidebar jika sebelumnya tertutup
-    }
+    setSidebarVisible(!sidebarVisible);
   }
 
   return (
     <div>
       <nav>
-        <ul className={`sidebar ${sidebarVisible ? "show" : ""}`}>
-          <li>
+        <ul className={` sidebar ${sidebarVisible ? "show" : ""}`}>
+          <li className="ml-5 ">
             <a href="" onClick={toggleSidebar}>
               {sidebarVisible ? (
                 <svg
+                  className="w-10 h-10"
                   xmlns="http://www.w3.org/2000/svg"
                   height="24"
                   viewBox="0 -960 960 960"
@@ -33,21 +30,39 @@ export const Navbar = () => {
             </a>
           </li>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/Login">
+              <div className="profile-section">
+                <img
+                  src="technical-support.png"
+                  alt="Profile"
+                  className="profile-image ml-6"
+                />
+                <span className="profile-name">Your Name</span>
+              </div>
+            </Link>
+          </li>
+          <li>
+            <Link className="ml-6" to="/">
+              Home
+            </Link>
           </li>
 
           <li>
-            <Link to="/About">About</Link>
+            <Link className="ml-6" to="/About">
+              About
+            </Link>
           </li>
 
           <li>
-            <Link to="/Service">Service</Link>
+            <Link className="ml-6" to="/Service">
+              Service
+            </Link>
           </li>
         </ul>
         <ul>
           <li>
             <Link to="/" className=" font-bold text-xl">
-              <img src="/logo-white.png" className=" w-12" alt="" />
+              <img src="/logo-white.png" className="w-12" alt="" />
             </Link>
           </li>
           <li className="hideOnMobile">
@@ -61,16 +76,13 @@ export const Navbar = () => {
           <li className="hideOnMobile">
             <Link to="/Service">Service</Link>
           </li>
-          <li onClick={toggleSidebar}>
+          <li onClick={toggleSidebar} className="hideOnDesktop">
             <a href="">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24"
-                viewBox="0 -960 960 960"
-                width="24"
-              >
-                <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-              </svg>
+              <img
+                src="technical-support.png"
+                alt="Profile"
+                className="profile-image"
+              />
             </a>
           </li>
         </ul>
