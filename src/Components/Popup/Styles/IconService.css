@@ -2,32 +2,31 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 40px; /* Sesuaikan ukuran dengan kebutuhan Anda */
-  height: 40px; /* Sesuaikan ukuran dengan kebutuhan Anda */
-  background-color: #25d366; /* Ganti dengan warna yang Anda inginkan */
+  width: 40px;
+  height: 40px;
+  background-color: #25d366;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Efek bayangan yang halus */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.3s ease;
+  touch-action: manipulation; /* Tambahkan ini untuk mengatasi masalah double-tap di perangkat mobile */
 
   &:hover {
-    /* Ganti warna background dan efek transform sesuai keinginan Anda */
     background-color: #8de8ae;
     transform: scale(1.1);
 
-    /* Tampilkan teks samping */
     &::before {
-      content: "Customer Service"; /* Teks yang akan muncul */
+      content: "Customer Service";
       display: block;
       position: absolute;
-      right: 50px; /* Sesuaikan jarak dari ikon */
+      right: 50px;
       top: 50%;
       transform: translateY(-50%);
-      background-color: #222831; /* Warna latar belakang teks */
+      background-color: #222831;
       padding: 8px;
       color: white;
       border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Efek bayangan yang halus */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       text-align: center;
     }
   }
