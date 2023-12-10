@@ -112,6 +112,7 @@ const Products = () => {
                       <FontAwesomeIcon icon={faStar} key={index} />
                     ))}
                   </div>
+                  <p className="store-card-description">{item.date}</p>
                 </div>
               </div>
             </Link>

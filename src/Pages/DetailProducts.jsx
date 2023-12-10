@@ -100,7 +100,7 @@ const DetailProdutcs = () => {
                 <FontAwesomeIcon icon={faMapMarker} />{" "}
                 <p className="text-lg text-gray-800 ">{produtcs.location}</p>
               </div>
-              <p className="text-lg text-gray-800 ">{produtcs.benefit}</p>
+              <p className="text-lg text-gray-800 ">{produtcs.date}</p>
             </div>
           </div>
         ) : (
