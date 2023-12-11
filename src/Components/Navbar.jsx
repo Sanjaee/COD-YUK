@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import "../Styles/Navbar.css";
 
 export const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [userName, setUserName] = useState("");
+  const history = createBrowserHistory();
+
+  useEffect(() => {
+    // Fetch user name from local storage when the component mounts
+    const storedUserName = localStorage.getItem("userFullName");
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
 
   function toggleSidebar(e) {
     e.preventDefault();
     setSidebarVisible(!sidebarVisible);
   }
+
+  const handleLogout = () => {
+    // Clear all data from local storage and redirect to Register
+    localStorage.clear();
+    history.push("/Register");
+  };
 
   return (
     <div>
@@ -30,14 +47,14 @@ export const Navbar = () => {
             </a>
           </li>
           <li>
-            <Link to="/Login">
+            <Link to={userName ? "/Profile" : "/Register"}>
               <div className="profile-section">
                 <img
                   src="technical-support.png"
                   alt="Profile"
                   className="profile-image ml-6"
                 />
-                <span className="profile-name">Your Name</span>
+                <span className="profile-name">{userName || "Login"}</span>
               </div>
             </Link>
           </li>
@@ -57,6 +74,9 @@ export const Navbar = () => {
             <Link className="ml-6" to="/Service">
               Service
             </Link>
+          </li>
+          <li className="ml-6">
+            <button onClick={handleLogout}>Logout</button>
           </li>
         </ul>
         <ul>

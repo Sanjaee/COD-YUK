@@ -103,9 +103,3 @@ nav li:first-child {
     display: none;
   }
 }
-
-@media (min-width: 800px) {
-  .hideOnDesktop {
-    display: none;
-  }
-}
