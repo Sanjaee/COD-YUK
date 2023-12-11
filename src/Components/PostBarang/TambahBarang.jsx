@@ -1,18 +1,18 @@
+// AddBarang.js
+
 import React, { useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { getDoc, updateDoc, collection, doc } from "firebase/firestore";
 import db from "../../Api/Firebase";
 
-const PostBarang = () => {
+const TambahBarang = () => {
   const [formData, setFormData] = useState({
     about: "",
     date: "",
-
     image: "",
-    imageList: [], // Change: Set imageList as an array
+    imageList: [],
     location: "",
     name: "",
     nomortelepon: "",
-
     price: "",
     status: "",
     title: "",
@@ -22,19 +22,41 @@ const PostBarang = () => {
     e.preventDefault();
 
     try {
-      // Add the data to the "Products" collection in Firebase
-      const docRef = await addDoc(collection(db, "Products"), formData);
-      console.log("Document written with ID: ", docRef.id);
+      // Retrieve userId from local storage
+      const userId = localStorage.getItem("userId");
+      console.log("User ID:", userId);
+
+      if (userId) {
+        const productsCollectionRef = collection(db, "Products");
+        const productDocRef = doc(productsCollectionRef, userId);
+
+        // Check if the document already exists
+        const productDocSnapshot = await getDoc(productDocRef);
+
+        if (productDocSnapshot.exists()) {
+          // If the document exists, update the existing document with form data
+          await updateDoc(productDocRef, formData);
+          console.log("Document updated successfully!");
+        } else {
+          console.error("Product document does not exist");
+        }
+      } else {
+        console.error("User ID not found in local storage");
+      }
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error("Error updating document: ", error);
     }
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Change: If the field is 'imageList', split the input into an array
-    const newValue = name === "imageList" ? value.split(",") : value;
+    // Change: If the field is 'imageList', handle empty value and split the input into an array
+    const newValue =
+      name === "imageList"
+        ? value
+          ? value.split(",")
+          : [] // Use an empty array if value is undefined
+        : value;
 
     setFormData({
       ...formData,
@@ -44,7 +66,7 @@ const PostBarang = () => {
 
   return (
     <div className="max-w-md mx-auto my-8 p-6 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Post Barang</h2>
+      <h2 className="text-2xl font-semibold mb-4">Add Product</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <label className="block">
           <span className="text-gray-700">About:</span>
@@ -86,9 +108,9 @@ const PostBarang = () => {
           <input
             type="text"
             name="imageList"
-            value={formData.imageList.join(",")} // Change: Join array elements into a string
+            value={formData.imageList.join(",")}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full p-3"
           />
         </label>
 
@@ -117,7 +139,7 @@ const PostBarang = () => {
         <label className="block">
           <span className="text-gray-700">Nomor Telepon:</span>
           <input
-            type="number"
+            type="text"
             name="nomortelepon"
             value={formData.nomortelepon}
             onChange={handleChange}
@@ -162,11 +184,11 @@ const PostBarang = () => {
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         >
-          Post Barang
+          Add Barang
         </button>
       </form>
     </div>
   );
 };
 
-export default PostBarang;
+export default TambahBarang;

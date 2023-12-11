@@ -63,11 +63,11 @@ const Login = () => {
           navigate("/");
         } else {
           // Password is incorrect
-          toast.error("Incorrect password");
+          toast.error("PASSWORD SALAH");
         }
       } else {
         // User does not exist
-        toast.error("User not found");
+        toast.error("AKUN TIDAK TERDAFTAR");
       }
     } catch (error) {
       console.error("Login error", error.message);

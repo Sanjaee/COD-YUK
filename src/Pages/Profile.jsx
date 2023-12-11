@@ -1,33 +1,73 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import PostBarang from "../Components/PostBarang/PostBarang";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
+import db from "../Api/Firebase";
+
+import TambahBarang from "../Components/PostBarang/TambahBarang";
+import UpdateBarang from "../Components/PostBarang/UpdateBarang";
 
 export const Profile = () => {
   const navigate = useNavigate();
+  const [barangAdded, setBarangAdded] = useState(false);
+  const [userProduct, setUserProduct] = useState(null);
 
   useEffect(() => {
-    // Check if the user is logged in
-    const isLoggedIn = !!localStorage.getItem("userFullname");
+    const fetchData = async () => {
+      const userId = localStorage.getItem("userId");
 
-    // If not logged in, navigate to the home page
-    if (!isLoggedIn) {
-      navigate("/");
-    }
+      if (!userId) {
+        // If userId is not available, navigate to the home page
+        navigate("/");
+        return;
+      }
+
+      const userProductRef = doc(db, "Products", userId);
+      const userProductDoc = await getDoc(userProductRef);
+
+      if (userProductDoc.exists()) {
+        setUserProduct({
+          id: userProductDoc.id,
+          ...userProductDoc.data(),
+        });
+
+        // Set up a real-time listener for updates
+        const unsubscribe = onSnapshot(userProductRef, (doc) => {
+          setUserProduct({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+
+        // Make sure to unsubscribe when the component unmounts
+        return () => {
+          unsubscribe();
+        };
+      }
+    };
+
+    fetchData();
   }, [navigate]);
 
   const handleLogout = () => {
-    // Clear all data from local storage and redirect to home page
+    // Clear all data from local storage and redirect to the home page
     localStorage.clear();
     navigate("/");
   };
 
-  // Fetch user data from local storage
-  const storedUserName = localStorage.getItem("userFullName");
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <div className=" items-start mb-11 font-bold">
+              <Link to="/">&larr; Kembali</Link>
+            </div>
             Profile
           </h2>
         </div>
@@ -41,11 +81,18 @@ export const Profile = () => {
           </div>
           <div className="ml-4">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              {storedUserName || "User"}
+              {localStorage.getItem("userFullName") || "User"}
             </h3>
           </div>
         </div>
-        <PostBarang />
+
+        {/* Render either TambahBarang or UpdateBarang based on the state */}
+        {userProduct && userProduct.status ? (
+          <UpdateBarang />
+        ) : (
+          <TambahBarang onBarangAdded={() => setBarangAdded(true)} />
+        )}
+
         <div className="mt-6">
           <button
             onClick={handleLogout}
