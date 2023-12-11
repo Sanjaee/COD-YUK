@@ -66,15 +66,16 @@ const DetailProdutcs = () => {
             {/* Kolom 1 (Gambar) */}
             <div className="md:w-1/2 md:pr-4">
               <Slider {...settings} className="slider-container">
-                {produtcs.imageList?.map((imageList, index) => (
-                  <div key={index} className="slider-item">
-                    <img
-                      src={imageList}
-                      alt={produtcs.name}
-                      className="w-full h-auto md:h-full rounded object-cover"
-                    />
-                  </div>
-                ))}
+                {Array.isArray(produtcs.imageList) &&
+                  produtcs.imageList.map((imageList, index) => (
+                    <div key={index} className="slider-item">
+                      <img
+                        src={imageList}
+                        alt={produtcs.name}
+                        className="w-full h-auto md:h-full rounded object-cover"
+                      />
+                    </div>
+                  ))}
               </Slider>
             </div>
             {/* Kolom 2 (Detail) */}

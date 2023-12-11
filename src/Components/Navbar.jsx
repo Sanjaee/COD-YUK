@@ -10,7 +10,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     // Fetch user data from local storage when the component mounts
-    const storedUserName = localStorage.getItem("userFullName");
+    const storedUserName = localStorage.getItem("userFullname");
     const storedProfileImage = localStorage.getItem("userGambarProfile");
 
     if (storedUserName) {
@@ -49,11 +49,11 @@ export const Navbar = () => {
           </li>
           <li>
             <Link to={userName ? "/Profile" : "/Login"}>
-              <div className="profile-section ">
+              <div className="profile-section">
                 <img
                   src={profileImage}
                   alt="Profile"
-                  className="profile-image ml-6 border-2 border-gray-900  "
+                  className="profile-image ml-6 border-2 border-gray-900"
                 />
                 <span className="profile-name">{userName || "Login"}</span>
               </div>

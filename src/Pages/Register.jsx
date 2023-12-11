@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [fullname, setfullname] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -20,14 +20,14 @@ const Register = () => {
         collection(db, "Products"),
         where("email", "==", email)
       );
-      const fullNameQuery = query(
+      const fullnameQuery = query(
         collection(db, "Products"),
-        where("fullName", "==", fullName)
+        where("fullname", "==", fullname)
       );
 
-      const [emailSnapshot, fullNameSnapshot] = await Promise.all([
+      const [emailSnapshot, fullnameSnapshot] = await Promise.all([
         getDocs(emailQuery),
-        getDocs(fullNameQuery),
+        getDocs(fullnameQuery),
       ]);
 
       if (!emailSnapshot.empty) {
@@ -40,7 +40,7 @@ const Register = () => {
       // Add user details to Firestore "Products" collection
       const userDocRef = await addDoc(collection(db, "Products"), {
         email,
-        fullName,
+        fullname,
         password, // Include the password field
       });
 
@@ -51,7 +51,7 @@ const Register = () => {
 
       // Clear the form inputs
       setEmail("");
-      setFullName("");
+      setfullname("");
       setPassword("");
 
       // Redirect to the "/Login" page
@@ -94,19 +94,19 @@ const Register = () => {
               />
             </div>
             <div>
-              <label htmlFor="fullName" className="sr-only">
+              <label htmlFor="fullname" className="sr-only">
                 Full Name
               </label>
               <input
-                id="fullName"
-                name="fullName"
+                id="fullname"
+                name="fullname"
                 type="text"
                 autoComplete="name"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Full Name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                value={fullname}
+                onChange={(e) => setfullname(e.target.value)}
               />
             </div>
             <div>
@@ -170,7 +170,7 @@ const Register = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        containerId="fullNameToast"
+        containerId="fullnameToast"
       />
     </div>
   );

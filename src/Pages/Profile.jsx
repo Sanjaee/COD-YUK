@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PostBarang from "../Components/PostBarang/PostBarang";
 
 export const Profile = () => {
   const navigate = useNavigate();
 
-  // Fetch user data from local storage
-  const storedUserName = localStorage.getItem("userFullName");
-
   useEffect(() => {
     // Check if the user is logged in
-    const isLoggedIn = !!localStorage.getItem("userFullName");
+    const isLoggedIn = !!localStorage.getItem("userFullname");
 
     // If not logged in, navigate to the home page
     if (!isLoggedIn) {
@@ -23,6 +21,8 @@ export const Profile = () => {
     navigate("/");
   };
 
+  // Fetch user data from local storage
+  const storedUserName = localStorage.getItem("userFullName");
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -43,9 +43,9 @@ export const Profile = () => {
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               {storedUserName || "User"}
             </h3>
-            {/* You can add more user information here */}
           </div>
         </div>
+        <PostBarang />
         <div className="mt-6">
           <button
             onClick={handleLogout}

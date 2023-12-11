@@ -22,7 +22,7 @@ const Login = () => {
 
       const userSnapshot = await getDocs(userQuery);
 
-      // If the user exists, check the password (for simplicity, assuming a field named "password" exists in Firestore)
+      // If the user exists, check the password (assuming a field named "password" exists in Firestore)
       if (!userSnapshot.empty) {
         const userData = userSnapshot.docs[0].data();
 
@@ -33,8 +33,31 @@ const Login = () => {
           // Store user information in local storage
           localStorage.setItem("userId", userSnapshot.docs[0].id);
           localStorage.setItem("userEmail", userData.email);
-          localStorage.setItem("userFullName", userData.fullName);
-          localStorage.setItem("userGambarProfile", userData.gambarprofile);
+          localStorage.setItem("userFullname", userData.fullname);
+
+          // Check if each field exists before setting it in local storage
+          if (userData.about) localStorage.setItem("userAbout", userData.about);
+          if (userData.date) localStorage.setItem("userDate", userData.date);
+
+          if (userData.image) localStorage.setItem("userImage", userData.image);
+
+          // Check if "imageList" exists and has elements before setting in local storage
+          if (userData.imageList && userData.imageList.length > 0) {
+            localStorage.setItem(
+              "userImageList",
+              JSON.stringify(userData.imageList)
+            );
+          }
+
+          if (userData.location)
+            localStorage.setItem("userLocation", userData.location);
+          if (userData.name) localStorage.setItem("userName", userData.name);
+          if (userData.nomortelepon)
+            localStorage.setItem("userNomorTelepon", userData.nomortelepon);
+          if (userData.price) localStorage.setItem("userPrice", userData.price);
+          if (userData.status)
+            localStorage.setItem("userStatus", userData.status);
+          if (userData.title) localStorage.setItem("userTitle", userData.title);
 
           // Redirect to the desired page upon successful login
           navigate("/");
