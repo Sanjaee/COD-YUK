@@ -115,7 +115,7 @@ const Payment = () => {
         </div>
         {/* card 2 */}
         <div className="col-span-2 p-4">
-          <h1 className="text-2xl font-bold mb-4">Product Information:</h1>
+          <h1 className="text-2xl font-bold mb-4">Chat Seller :</h1>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium">NAMA </label>

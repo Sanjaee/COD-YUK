@@ -1,0 +1,8 @@
+/* Add these styles to your CSS */
+.slider-container {
+  height: 100%; /* Set a fixed height for the slider container */
+}
+
+.slider-item {
+  height: 100%; /* Ensure each slide fills the container */
+}

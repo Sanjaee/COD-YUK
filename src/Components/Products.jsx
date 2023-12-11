@@ -84,7 +84,7 @@ const Products = () => {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="store-card-image w52"
+                  className="store-card-image"
                 />
 
                 <div className="store-card-details">

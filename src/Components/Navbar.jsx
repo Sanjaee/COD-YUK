@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import "../Styles/Navbar.css";
+import gambarDefault from "../../public/d.png";
 
 export const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [userName, setUserName] = useState("");
-  const history = createBrowserHistory();
+  const [profileImage, setProfileImage] = useState(gambarDefault); // Default image
 
   useEffect(() => {
-    // Fetch user name from local storage when the component mounts
+    // Fetch user data from local storage when the component mounts
     const storedUserName = localStorage.getItem("userFullName");
+    const storedProfileImage = localStorage.getItem("userGambarProfile");
+
     if (storedUserName) {
       setUserName(storedUserName);
+    }
+
+    // Set the profile image based on whether it's available in local storage
+    if (storedProfileImage) {
+      setProfileImage(storedProfileImage);
     }
   }, []);
 
@@ -20,12 +27,6 @@ export const Navbar = () => {
     e.preventDefault();
     setSidebarVisible(!sidebarVisible);
   }
-
-  const handleLogout = () => {
-    // Clear all data from local storage and redirect to Register
-    localStorage.clear();
-    history.push("/Register");
-  };
 
   return (
     <div>
@@ -47,36 +48,31 @@ export const Navbar = () => {
             </a>
           </li>
           <li>
-            <Link to={userName ? "/Profile" : "/Register"}>
-              <div className="profile-section">
+            <Link to={userName ? "/Profile" : "/Login"}>
+              <div className="profile-section ">
                 <img
-                  src="technical-support.png"
+                  src={profileImage}
                   alt="Profile"
-                  className="profile-image ml-6"
+                  className="profile-image ml-6 border-2 border-gray-900  "
                 />
                 <span className="profile-name">{userName || "Login"}</span>
               </div>
             </Link>
           </li>
           <li>
-            <Link className="ml-6" to="/">
+            <Link className="ml-6 " to="/">
               Home
             </Link>
           </li>
-
           <li>
-            <Link className="ml-6" to="/About">
+            <Link className="ml-6 " to="/About">
               About
             </Link>
           </li>
-
           <li>
-            <Link className="ml-6" to="/Service">
+            <Link className="ml-6 " to="/Service">
               Service
             </Link>
-          </li>
-          <li className="ml-6">
-            <button onClick={handleLogout}>Logout</button>
           </li>
         </ul>
         <ul>
@@ -88,21 +84,15 @@ export const Navbar = () => {
           <li className="hideOnMobile">
             <Link to="/">Home</Link>
           </li>
-
           <li className="hideOnMobile">
             <Link to="/About">About</Link>
           </li>
-
           <li className="hideOnMobile">
             <Link to="/Service">Service</Link>
           </li>
           <li onClick={toggleSidebar} className="hideOnDesktop">
             <a href="">
-              <img
-                src="technical-support.png"
-                alt="Profile"
-                className="profile-image"
-              />
+              <img src={profileImage} alt="Profile" className="profile-image" />
             </a>
           </li>
         </ul>

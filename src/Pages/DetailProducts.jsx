@@ -4,7 +4,7 @@ import db from "../Api/Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarker, faStar } from "@fortawesome/free-solid-svg-icons";
-
+import "../Styles/DetailProducts.css";
 import Slider from "react-slick";
 import { Navbar } from "../Components/Navbar";
 import Payment from "../Components/Payments";
@@ -64,14 +64,14 @@ const DetailProdutcs = () => {
         {produtcs ? (
           <div className="md:flex md:mt-24 mt-20">
             {/* Kolom 1 (Gambar) */}
-            <div className="md:w-1/2">
-              <Slider {...settings}>
+            <div className="md:w-1/2 md:pr-4">
+              <Slider {...settings} className="slider-container">
                 {produtcs.imageList?.map((imageList, index) => (
-                  <div key={index}>
+                  <div key={index} className="slider-item">
                     <img
                       src={imageList}
                       alt={produtcs.name}
-                      className="w-full h-auto rounded"
+                      className="w-full h-auto md:h-full rounded object-cover"
                     />
                   </div>
                 ))}

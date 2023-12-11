@@ -34,6 +34,7 @@ const Login = () => {
           localStorage.setItem("userId", userSnapshot.docs[0].id);
           localStorage.setItem("userEmail", userData.email);
           localStorage.setItem("userFullName", userData.fullName);
+          localStorage.setItem("userGambarProfile", userData.gambarprofile);
 
           // Redirect to the desired page upon successful login
           navigate("/");
