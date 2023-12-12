@@ -6,12 +6,14 @@ import {
   getDownloadURL as getStorageDownloadURL,
 } from "firebase/storage";
 import { db, storage } from "../../Api/Firebase";
+import { toast } from "react-toastify";
+import { NotifProfile } from "../Popup/NotifProfile";
 
 const TambahBarang = () => {
   const [image, setImage] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [imagePreview, setImagePreview] = useState(null);
-  const [imageListPreview, setImageListPreview] = useState([]); // Declare imageListPreview here
+  const [imageListPreview, setImageListPreview] = useState([]);
 
   const [formData, setFormData] = useState({
     about: "",
@@ -83,8 +85,8 @@ const TambahBarang = () => {
         // Update form data with image URLs
         const updatedFormData = {
           ...formData,
-          image: imageUrl, // Update image field
-          imageList: imageListUrls, // Update imageList field
+          image: imageUrl,
+          imageList: imageListUrls,
         };
 
         // Check if the document already exists
@@ -93,7 +95,29 @@ const TambahBarang = () => {
         if (productDocSnapshot.exists()) {
           // If the document exists, update the existing document with form data
           await updateDoc(productDocRef, updatedFormData);
+          toast.success("Product added successfully!", {
+            position: "top-right",
+          });
           console.log("Document updated successfully!");
+
+          // Clear input fields and image previews after successful update
+          setImage(null);
+          setImageList([]);
+          setImagePreview(null);
+          setImageListPreview([]);
+
+          setFormData({
+            about: "",
+            date: "",
+            image: "",
+            imageList: [],
+            location: "",
+            name: "",
+            nomortelepon: "",
+            price: "",
+            status: "",
+            title: "",
+          });
         } else {
           console.error("Product document does not exist");
         }
@@ -248,6 +272,7 @@ const TambahBarang = () => {
         >
           Add Barang
         </button>
+        <NotifProfile />
       </form>
     </div>
   );
