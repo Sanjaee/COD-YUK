@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { addDoc, collection, updateDoc, doc, getDoc } from "firebase/firestore";
-import { db } from "../../Api/Firebase";
+import { getDoc, updateDoc, doc, collection } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../../Api/Firebase";
+import { toast } from "react-toastify";
+import { NotifProfile } from "../Popup/NotifProfile";
 
-const UpdateBarang = () => {
-  const storedUserId = localStorage.getItem("userId");
-  const [userId, setUserId] = useState(storedUserId);
+const EditBarang = () => {
+  const [image, setImage] = useState(null);
+  const [imageList, setImageList] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageListPreview, setImageListPreview] = useState([]);
 
   const [formData, setFormData] = useState({
     about: "",
@@ -20,61 +25,144 @@ const UpdateBarang = () => {
   });
 
   useEffect(() => {
-    // If you have a userId, fetch existing data from Firebase and populate the form
     const fetchData = async () => {
-      if (userId) {
-        const docRef = doc(db, "Products", userId);
-        const docSnap = await getDoc(docRef);
+      try {
+        const userId = localStorage.getItem("userId");
 
-        if (docSnap.exists()) {
-          setFormData(docSnap.data());
+        if (!userId) {
+          console.error("User ID not found in local storage");
+          return;
         }
+
+        const productDocRef = doc(db, "Products", userId);
+        const productDocSnapshot = await getDoc(productDocRef);
+        const productData = productDocSnapshot.data();
+
+        if (productData) {
+          setFormData(productData);
+
+          // Modify this part to correctly form the image URLs
+          const imageUrls = await Promise.all(
+            productData.imageList.map(async (imageName) => {
+              try {
+                const storageRef = ref(storage, `images/${imageName}`);
+                const url = await getDownloadURL(storageRef);
+                return url;
+              } catch (error) {
+                console.error(
+                  "Error getting download URL for",
+                  imageName,
+                  error
+                );
+                return null;
+              }
+            })
+          );
+
+          setImageListPreview(imageUrls.filter((url) => url !== null));
+        } else {
+          console.error("Product document does not exist");
+        }
+      } catch (error) {
+        console.error("Error fetching document: ", error);
       }
     };
 
     fetchData();
-  }, [userId]);
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (name === "image") {
+      const selectedImage = files[0];
+      setImage(selectedImage);
+      setImagePreview(URL.createObjectURL(selectedImage));
+    } else if (name === "imageList") {
+      const selectedImages = Array.from(files);
+      setImageList((prevImageList) => [...prevImageList, ...selectedImages]);
+      setImageListPreview((prevImageListPreview) =>
+        prevImageListPreview.concat(
+          selectedImages.map((img) => URL.createObjectURL(img))
+        )
+      );
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const uploadFile = async (file) => {
+    try {
+      const storageRef = ref(storage, `images/${file.name}`);
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log("File uploaded successfully:", downloadURL);
+      return downloadURL;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      if (userId) {
-        // Update existing document
-        await updateDoc(doc(db, "Products", userId), formData);
-        console.log("Document updated with ID: ", userId);
+      const userId = localStorage.getItem("userId");
+
+      if (!userId) {
+        console.error("User ID not found in local storage");
+        // Redirect the user to the login page or handle the case where userId is not defined
+        return;
+      }
+
+      const productsCollectionRef = collection(db, "Products");
+      const productDocRef = doc(productsCollectionRef, userId);
+
+      let imageUrl = null;
+      let imageListUrls = [];
+
+      // Upload new image if selected
+      if (image) {
+        imageUrl = await uploadFile(image);
+      }
+
+      // Upload new imageList if selected
+      if (imageList.length > 0) {
+        imageListUrls = await Promise.all(
+          imageList.map((file) => uploadFile(file))
+        );
+      }
+
+      const updatedFormData = {
+        ...formData,
+        image: imageUrl || formData.image, // Use existing image URL if not updated
+        imageList:
+          imageListUrls.length > 0 ? imageListUrls : formData.imageList, // Use existing imageList if not updated
+      };
+
+      const productDocSnapshot = await getDoc(productDocRef);
+
+      if (productDocSnapshot.exists()) {
+        await updateDoc(productDocRef, updatedFormData);
+        toast.success("Product updated successfully!", {
+          position: "top-right",
+        });
+        console.log("Document updated successfully!");
+
+        setImage(null);
+        setImageList([]);
+        setImagePreview(null);
+        setImageListPreview([]);
       } else {
-        // Add new document
-        const newDocRef = await addDoc(collection(db, "Products"), formData);
-        const newUserId = newDocRef.id;
-
-        // Save the new user ID to local storage
-        localStorage.setItem("userId", newUserId);
-
-        setUserId(newUserId);
-
-        console.log("Document added with ID: ", newUserId);
+        console.error("Product document does not exist");
       }
     } catch (error) {
-      console.error("Error adding/updating document: ", error);
+      console.error("Error updating document: ", error);
     }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Change: If the field is 'imageList', handle empty value and split the input into an array
-    const newValue =
-      name === "imageList"
-        ? value
-          ? value.split(",")
-          : [] // Use an empty array if value is undefined
-        : value;
-
-    setFormData({
-      ...formData,
-      [name]: newValue,
-    });
   };
 
   return (
@@ -109,26 +197,67 @@ const UpdateBarang = () => {
         <label className="block">
           <span className="text-gray-700">Image:</span>
           <input
-            type="text"
+            type="file"
             name="image"
-            value={formData.image}
             onChange={handleChange}
             className="form-input mt-1 block w-full"
           />
+          {image && (
+            <div className="mt-2">
+              <img
+                src={imagePreview}
+                alt="Selected"
+                className="max-w-full h-auto"
+              />
+            </div>
+          )}
+          {formData.image && (
+            <div className="mt-2">
+              <img
+                src={formData.image}
+                alt="Selected"
+                className="max-w-full h-auto"
+              />
+            </div>
+          )}
         </label>
 
-        {/* Image List (comma-separated URLs) */}
+        {/* Image List */}
         <label className="block">
-          <span className="text-gray-700">
-            Image List (comma-separated URLs):
-          </span>
+          <span className="text-gray-700">Image List:</span>
           <input
-            type="text"
+            type="file"
             name="imageList"
-            value={formData.imageList.join(",")} // Change: Join array elements into a string
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full p-3"
+            multiple
           />
+
+          {imageListPreview.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {imageListPreview.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`Selected ${index + 1}`}
+                  className="max-w-full h-auto mr-2 mb-2"
+                />
+              ))}
+            </div>
+          )}
+
+          {formData.imageList.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {formData.imageList.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Selected ${index + 1}`}
+                  className="max-w-full h-auto mr-2 mb-2"
+                />
+              ))}
+            </div>
+          )}
         </label>
 
         {/* Location */}
@@ -207,11 +336,12 @@ const UpdateBarang = () => {
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         >
-          {userId ? "Update Barang" : "Post Barang"}
+          Edit Product
         </button>
+        <NotifProfile />
       </form>
     </div>
   );
 };
 
-export default UpdateBarang;
+export default EditBarang;

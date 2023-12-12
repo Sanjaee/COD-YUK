@@ -8,9 +8,8 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../Api/Firebase";
-
 import TambahBarang from "../Components/PostBarang/TambahBarang";
-import UpdateBarang from "../Components/PostBarang/UpdateBarang";
+import EditBarang from "../Components/PostBarang/UpdateBarang";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -81,14 +80,14 @@ export const Profile = () => {
           </div>
           <div className="ml-4">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              {localStorage.getItem("userFullName") || "User"}
+              Hi! {localStorage.getItem("userFullname") || "User"}
             </h3>
           </div>
         </div>
 
         {/* Render either TambahBarang or UpdateBarang based on the state */}
         {userProduct && userProduct.status ? (
-          <UpdateBarang />
+          <EditBarang />
         ) : (
           <TambahBarang onBarangAdded={() => setBarangAdded(true)} />
         )}
