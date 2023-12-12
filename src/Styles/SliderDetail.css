@@ -1,0 +1,45 @@
+/* ../Styles/Slider.css */
+
+.custom-next-arrow,
+.custom-prev-arrow {
+  background-color: #393e46; /* Warna latar belakang tombol */
+  color: #eeeeee; /* Warna teks tombol */
+  border: none;
+  border-radius: 50%; /* Untuk membuat bentuk bulat */
+  padding: 10px; /* Atur ukuran padding sesuai keinginan */
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  z-index: 999;
+  transform: translateY(-50%);
+  opacity: 0;
+  font-size: 29px; /* Atur ukuran font sesuai keinginan */
+  transition: all 0.3s ease; /* Tambahkan animasi transisi */
+}
+
+.custom-prev-arrow {
+  left: 10px; /* Sesuaikan posisi tombol kiri */
+}
+
+.custom-next-arrow {
+  right: 10px; /* Sesuaikan posisi tombol kanan */
+}
+
+.slider-item:hover .custom-next-arrow {
+  opacity: 1;
+  padding: 13px;
+  transform: translateY(-50%) translateX(30px);
+}
+
+.slider-item:hover .custom-prev-arrow {
+  opacity: 1;
+  padding: 13px;
+  transform: translateY(-50%) translateX(-30px);
+}
+
+@media (max-width: 600px) {
+  .custom-prev-arrow,
+  .custom-next-arrow {
+    font-size: 18px; /* Ubah ukuran font sesuai keinginan pada layar kecil */
+  }
+}

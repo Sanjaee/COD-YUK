@@ -9,6 +9,31 @@ import Slider from "react-slick";
 import { Navbar } from "../Components/Navbar";
 import Payment from "../Components/Payments";
 import ServiceIcon from "../Components/Popup/IconService";
+import "../Styles/SliderDetail.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const CustomPrevArrow = ({ onClick, ...rest }) => {
+  // Extracting the unwanted props to avoid passing them to the button
+  const { currentSlide, slideCount, ...buttonProps } = rest;
+
+  return (
+    <button onClick={onClick} {...buttonProps} className="custom-prev-arrow">
+      &#x2190;
+    </button>
+  );
+};
+
+const CustomNextArrow = ({ onClick, ...rest }) => {
+  // Extracting the unwanted props to avoid passing them to the button
+  const { currentSlide, slideCount, ...buttonProps } = rest;
+
+  return (
+    <button onClick={onClick} {...buttonProps} className="custom-next-arrow">
+      &#8594;
+    </button>
+  );
+};
 
 const DetailProdutcs = () => {
   const { id } = useParams();
@@ -55,6 +80,8 @@ const DetailProdutcs = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
   };
 
   return (
@@ -64,7 +91,7 @@ const DetailProdutcs = () => {
         {produtcs ? (
           <div className="md:flex md:mt-24 mt-20">
             {/* Kolom 1 (Gambar) */}
-            <div className="md:w-1/2 md:pr-4">
+            <div className="md:w-1/2 md:pr-4 slider-item">
               <Slider {...settings} className="slider-container">
                 {Array.isArray(produtcs.imageList) &&
                   produtcs.imageList.map((imageList, index) => (
