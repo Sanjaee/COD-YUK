@@ -73,7 +73,7 @@ const SliderHeading = () => {
       <div className="max-w-screen-lg mx-auto mt-16">
         <div className="p-3 slider-item">
           {loading ? (
-            <div className="skeleton-container">
+            <div className="skeleton-container-heading">
               <Skeleton height={470} width="100%" />
             </div>
           ) : (

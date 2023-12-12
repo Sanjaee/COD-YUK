@@ -37,14 +37,14 @@
   transform: translateY(-50%) translateX(-30px);
 }
 
-.skeleton-container {
+.skeleton-container-heading {
   height: 370px; /* Set the height as needed */
   width: 100%;
   position: relative;
 }
 
 /* Skeleton Loading Styles */
-.skeleton-container {
+.skeleton-container-heading {
   animation: loading 1.5s infinite;
   background: linear-gradient(90deg, #d0d0d0 25%, #b0b0b0 50%, #d0d0d0 75%);
   background-size: 200% 100%;
@@ -60,13 +60,13 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 400px) {
   .custom-prev-arrow,
   .custom-next-arrow {
     font-size: 8px; /* Ubah ukuran font sesuai keinginan pada layar kecil */
   }
-  .skeleton-container {
-    height: 135px; /* Set the height as needed */
+  .skeleton-container-heading {
+    height: 135px;
     width: 100%;
     position: relative;
   }
