@@ -48,7 +48,7 @@
   animation: loading 1.5s infinite;
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 @keyframes loading {
@@ -66,14 +66,7 @@
     font-size: 8px; /* Ubah ukuran font sesuai keinginan pada layar kecil */
   }
   .skeleton-container {
-    height: 120px; /* Set the height as needed */
-    width: 100%;
-    position: relative;
-  }
-}
-@media (max-width: 800px) {
-  .skeleton-container {
-    height: 250px; /* Set the height as needed */
+    height: 135px; /* Set the height as needed */
     width: 100%;
     position: relative;
   }
