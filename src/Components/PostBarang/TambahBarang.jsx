@@ -14,6 +14,7 @@ const TambahBarang = () => {
   const [imageList, setImageList] = useState([]);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageListPreview, setImageListPreview] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     about: "",
@@ -71,6 +72,7 @@ const TambahBarang = () => {
       // Retrieve userId from local storage
       const userId = localStorage.getItem("userId");
       console.log("User ID:", userId);
+      setLoading(true);
 
       if (userId) {
         const productsCollectionRef = collection(db, "Products");
@@ -192,13 +194,6 @@ const TambahBarang = () => {
             </div>
           )}
         </label>
-        <input
-          type="file"
-          name="imageList"
-          onChange={handleChange}
-          className="form-input mt-1 block w-full p-3"
-          multiple
-        />
 
         <label className="block">
           <span className="text-gray-700">Location:</span>
@@ -270,7 +265,7 @@ const TambahBarang = () => {
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         >
-          Add Barang
+          {loading ? "Loading..." : "Add Barang"}
         </button>
         <NotifProfile />
       </form>

@@ -10,6 +10,7 @@ const EditBarang = () => {
   const [imageList, setImageList] = useState([]);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageListPreview, setImageListPreview] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     about: "",
@@ -112,6 +113,7 @@ const EditBarang = () => {
 
     try {
       const userId = localStorage.getItem("userId");
+      setLoading(true);
 
       if (!userId) {
         console.error("User ID not found in local storage");
@@ -162,9 +164,10 @@ const EditBarang = () => {
       }
     } catch (error) {
       console.error("Error updating document: ", error);
+    } finally {
+      setLoading(false); // Set loading back to false after the operation is completed
     }
   };
-
   return (
     <div className="max-w-md mx-auto my-8 p-6 bg-white rounded shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Update Product</h2>
@@ -336,7 +339,7 @@ const EditBarang = () => {
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         >
-          Edit Product
+          {loading ? "Loading..." : "Edit Barang"}
         </button>
         <NotifProfile />
       </form>
