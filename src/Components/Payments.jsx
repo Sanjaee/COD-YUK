@@ -3,7 +3,7 @@ import "../Components/Popup/Styles/Notification.css";
 import { Link, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import PopUp from "./Popup/ButtonDetailProducts";
-import db from "../Api/Firebase";
+import { db } from "../Api/Firebase";
 
 const Payment = () => {
   const { id } = useParams();

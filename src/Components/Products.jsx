@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
-import db from "../Api/Firebase";
+import { db } from "../Api/Firebase";
 import "../Styles/Products.css";
 import { Link } from "react-router-dom";
 import { faStar, faMapMarker } from "@fortawesome/free-solid-svg-icons";

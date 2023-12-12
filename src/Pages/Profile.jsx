@@ -7,7 +7,7 @@ import {
   getDocs,
   onSnapshot,
 } from "firebase/firestore";
-import db from "../Api/Firebase";
+import { db } from "../Api/Firebase";
 
 import TambahBarang from "../Components/PostBarang/TambahBarang";
 import UpdateBarang from "../Components/PostBarang/UpdateBarang";

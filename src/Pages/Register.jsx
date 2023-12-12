@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
-import db from "../Api/Firebase";
+import { db } from "../Api/Firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";

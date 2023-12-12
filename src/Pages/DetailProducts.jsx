@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import db from "../Api/Firebase";
+import { db } from "../Api/Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarker, faStar } from "@fortawesome/free-solid-svg-icons";

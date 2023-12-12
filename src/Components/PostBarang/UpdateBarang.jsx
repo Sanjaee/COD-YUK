@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { addDoc, collection, updateDoc, doc, getDoc } from "firebase/firestore";
-import db from "../../Api/Firebase";
+import { db } from "../../Api/Firebase";
 
 const UpdateBarang = () => {
   const storedUserId = localStorage.getItem("userId");

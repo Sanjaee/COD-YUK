@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
-import db from "../Api/Firebase"; // Import your Firebase configuration
+import { db } from "../Api/Firebase"; // Import your Firebase configuration
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

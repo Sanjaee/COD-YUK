@@ -1,10 +1,18 @@
-// AddBarang.js
-
 import React, { useState } from "react";
 import { getDoc, updateDoc, collection, doc } from "firebase/firestore";
-import db from "../../Api/Firebase";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL as getStorageDownloadURL,
+} from "firebase/storage";
+import { db, storage } from "../../Api/Firebase";
 
 const TambahBarang = () => {
+  const [image, setImage] = useState(null);
+  const [imageList, setImageList] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageListPreview, setImageListPreview] = useState([]); // Declare imageListPreview here
+
   const [formData, setFormData] = useState({
     about: "",
     date: "",
@@ -18,6 +26,42 @@ const TambahBarang = () => {
     title: "",
   });
 
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (name === "image") {
+      const selectedImage = files[0];
+      setImage(selectedImage);
+      setImagePreview(URL.createObjectURL(selectedImage));
+    } else if (name === "imageList") {
+      const selectedImages = Array.from(files);
+      setImageList((prevImageList) => [...prevImageList, ...selectedImages]);
+      setImageListPreview((prevImageListPreview) =>
+        prevImageListPreview.concat(
+          selectedImages.map((img) => URL.createObjectURL(img))
+        )
+      );
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const uploadFile = async (file) => {
+    try {
+      const storageRef = ref(storage, `images/${file.name}`);
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getStorageDownloadURL(storageRef);
+      console.log("File uploaded successfully:", downloadURL);
+      return downloadURL;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,12 +74,25 @@ const TambahBarang = () => {
         const productsCollectionRef = collection(db, "Products");
         const productDocRef = doc(productsCollectionRef, userId);
 
+        // Handle image upload and update form data
+        const imageUrl = image ? await uploadFile(image) : null;
+        const imageListUrls = await Promise.all(
+          imageList.map((file) => uploadFile(file))
+        );
+
+        // Update form data with image URLs
+        const updatedFormData = {
+          ...formData,
+          image: imageUrl, // Update image field
+          imageList: imageListUrls, // Update imageList field
+        };
+
         // Check if the document already exists
         const productDocSnapshot = await getDoc(productDocRef);
 
         if (productDocSnapshot.exists()) {
           // If the document exists, update the existing document with form data
-          await updateDoc(productDocRef, formData);
+          await updateDoc(productDocRef, updatedFormData);
           console.log("Document updated successfully!");
         } else {
           console.error("Product document does not exist");
@@ -47,22 +104,6 @@ const TambahBarang = () => {
       console.error("Error updating document: ", error);
     }
   };
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Change: If the field is 'imageList', handle empty value and split the input into an array
-    const newValue =
-      name === "imageList"
-        ? value
-          ? value.split(",")
-          : [] // Use an empty array if value is undefined
-        : value;
-
-    setFormData({
-      ...formData,
-      [name]: newValue,
-    });
-  };
 
   return (
     <div className="max-w-md mx-auto my-8 p-6 bg-white rounded shadow-md">
@@ -73,7 +114,6 @@ const TambahBarang = () => {
           <input
             type="text"
             name="about"
-            value={formData.about}
             onChange={handleChange}
             className="form-input mt-1 block w-full"
           />
@@ -84,7 +124,6 @@ const TambahBarang = () => {
           <input
             type="text"
             name="date"
-            value={formData.date}
             onChange={handleChange}
             className="form-input mt-1 block w-full"
           />
@@ -93,26 +132,49 @@ const TambahBarang = () => {
         <label className="block">
           <span className="text-gray-700">Image:</span>
           <input
-            type="text"
+            type="file"
             name="image"
-            value={formData.image}
             onChange={handleChange}
             className="form-input mt-1 block w-full"
           />
+          {image && (
+            <img
+              src={imagePreview}
+              alt="Selected"
+              className="mt-2 max-w-full h-auto"
+            />
+          )}
         </label>
 
         <label className="block">
-          <span className="text-gray-700">
-            Image List (comma-separated URLs):
-          </span>
+          <span className="text-gray-700">Image List :</span>
           <input
-            type="text"
+            type="file"
             name="imageList"
-            value={formData.imageList.join(",")}
             onChange={handleChange}
             className="form-input mt-1 block w-full p-3"
+            multiple
           />
+          {imageListPreview.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {imageListPreview.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`Selected ${index + 2}`}
+                  className="max-w-full h-auto mr-2 mb-2"
+                />
+              ))}
+            </div>
+          )}
         </label>
+        <input
+          type="file"
+          name="imageList"
+          onChange={handleChange}
+          className="form-input mt-1 block w-full p-3"
+          multiple
+        />
 
         <label className="block">
           <span className="text-gray-700">Location:</span>
