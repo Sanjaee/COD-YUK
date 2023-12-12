@@ -68,7 +68,7 @@ section {
 /* Skeleton Loading Styles */
 .skeleton-container {
   animation: loading 1.5s infinite;
-  background: linear-gradient(90deg, #d0d0d0 25%, #b0b0b0 50%, #d0d0d0 75%);
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   border-radius: 5px;
 }
