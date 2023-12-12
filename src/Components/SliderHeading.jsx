@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../Api/Firebase"; // Import your Firebase configuration
+import { db } from "../Api/Firebase";
 import Slider from "react-slick";
+import Skeleton from "react-loading-skeleton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../Styles/Slider.css";
 
 const CustomPrevArrow = ({ onClick, ...rest }) => {
-  // Extracting the unwanted props to avoid passing them to the button
   const { currentSlide, slideCount, ...buttonProps } = rest;
 
   return (
@@ -18,7 +18,6 @@ const CustomPrevArrow = ({ onClick, ...rest }) => {
 };
 
 const CustomNextArrow = ({ onClick, ...rest }) => {
-  // Extracting the unwanted props to avoid passing them to the button
   const { currentSlide, slideCount, ...buttonProps } = rest;
 
   return (
@@ -30,9 +29,9 @@ const CustomNextArrow = ({ onClick, ...rest }) => {
 
 const SliderHeading = () => {
   const [sliderData, setSliderData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data from the "slider" collection and listen for real-time updates
     const sliderCollection = collection(db, "Slider");
 
     const unsubscribe = onSnapshot(sliderCollection, (querySnapshot) => {
@@ -40,14 +39,22 @@ const SliderHeading = () => {
       querySnapshot.forEach((doc) => {
         sliderItems.push({ id: doc.id, ...doc.data() });
       });
-      setSliderData(sliderItems);
+
+      // Set a timeout for 2 seconds to show the skeleton loader
+      const timeoutId = setTimeout(() => {
+        setSliderData(sliderItems);
+        setLoading(false);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
     });
 
     return () => {
-      // Stop listening to changes when the component is unmounted
       unsubscribe();
     };
-  }, []);
+  }, []); // No dependencies, runs once
 
   const settings = {
     dots: true,
@@ -62,20 +69,26 @@ const SliderHeading = () => {
   };
 
   return (
-    <div className="bg-gray-400 py-4 ">
+    <div className="bg-gray-400 py-4">
       <div className="max-w-screen-lg mx-auto mt-16">
         <div className="p-3 slider-item">
-          <Slider {...settings}>
-            {sliderData.map((item) => (
-              <div key={item.id}>
-                <img
-                  src={item.image}
-                  alt="Slider"
-                  className="max-w-full h-auto rounded-lg p-1 s"
-                />
-              </div>
-            ))}
-          </Slider>
+          {loading ? (
+            <div className="skeleton-container">
+              <Skeleton height={470} width="100%" />
+            </div>
+          ) : (
+            <Slider {...settings}>
+              {sliderData.map((item) => (
+                <div key={item.id}>
+                  <img
+                    src={item.image}
+                    alt="Slider"
+                    className="max-w-full h-auto rounded-lg p-1"
+                  />
+                </div>
+              ))}
+            </Slider>
+          )}
         </div>
       </div>
     </div>
