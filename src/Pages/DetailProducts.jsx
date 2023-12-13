@@ -3,7 +3,12 @@ import { useParams } from "react-router-dom";
 import { db } from "../Api/Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarker, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faMapMarker,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import "../Styles/DetailProducts.css";
 import Slider from "react-slick";
 import { Navbar } from "../Components/Navbar";
@@ -19,7 +24,7 @@ const CustomPrevArrow = ({ onClick, ...rest }) => {
 
   return (
     <button onClick={onClick} {...buttonProps} className="custom-prev-arrow">
-      &#x2190;
+      <FontAwesomeIcon icon={faArrowLeft} />
     </button>
   );
 };
@@ -30,7 +35,7 @@ const CustomNextArrow = ({ onClick, ...rest }) => {
 
   return (
     <button onClick={onClick} {...buttonProps} className="custom-next-arrow">
-      &#8594;
+      <FontAwesomeIcon icon={faArrowRight} />
     </button>
   );
 };
@@ -89,22 +94,25 @@ const DetailProdutcs = () => {
       <Navbar />
       <div className="container mx-auto p-4">
         {produtcs ? (
-          <div className="md:flex md:mt-24 mt-20">
+          <div className="md:flex md:mt-24 mt-14">
             {/* Kolom 1 (Gambar) */}
             <div className="md:w-1/2 md:pr-4 slider-item">
-              <Slider {...settings} className="slider-container">
-                {Array.isArray(produtcs.imageList) &&
-                  produtcs.imageList.map((imageList, index) => (
-                    <div key={index} className="slider-item">
-                      <img
-                        src={imageList}
-                        alt={produtcs.name}
-                        className="w-full h-auto md:h-full rounded object-cover"
-                      />
-                    </div>
-                  ))}
-              </Slider>
+              <div className="w-full">
+                <Slider {...settings} className="slider-container">
+                  {Array.isArray(produtcs.imageList) &&
+                    produtcs.imageList.map((imageList, index) => (
+                      <div key={index} className="slider-item">
+                        <img
+                          src={imageList}
+                          alt={produtcs.name}
+                          className="store-card-image-detail"
+                        />
+                      </div>
+                    ))}
+                </Slider>
+              </div>
             </div>
+
             {/* Kolom 2 (Detail) */}
             <div className="md:w-1/2 md:pl-4">
               <p className="text-3xl text-gray-800 mb-2 font-bold mt-7">

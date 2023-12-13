@@ -174,21 +174,24 @@ const EditBarang = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* About */}
         <label className="block">
-          <span className="text-gray-700">About:</span>
-          <input
+          <span className="text-gray-700">Catatan/Sepesifikasi barang:</span>
+          <textarea
             type="text"
             name="about"
             value={formData.about}
+            rows="auto"
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            style={{ minHeight: "200px" }}
+            placeholder="Masukkan catatan/spesifikasi barang..."
           />
         </label>
 
         {/* Date */}
         <label className="block">
-          <span className="text-gray-700">Date:</span>
+          <span className="text-gray-700">Tanggal:</span>
           <input
-            type="text"
+            type="date"
             name="date"
             value={formData.date}
             onChange={handleChange}
@@ -198,7 +201,7 @@ const EditBarang = () => {
 
         {/* Image */}
         <label className="block">
-          <span className="text-gray-700">Image:</span>
+          <span className="text-gray-700">Thumbnail Barang:</span>
           <input
             type="file"
             name="image"
@@ -227,7 +230,7 @@ const EditBarang = () => {
 
         {/* Image List */}
         <label className="block">
-          <span className="text-gray-700">Image List:</span>
+          <span className="text-gray-700">Detail Barang:</span>
           <input
             type="file"
             name="imageList"
@@ -265,25 +268,27 @@ const EditBarang = () => {
 
         {/* Location */}
         <label className="block">
-          <span className="text-gray-700">Location:</span>
+          <span className="text-gray-700">Lokasi COD:</span>
           <input
             type="text"
             name="location"
             value={formData.location}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            placeholder="Cengkareng Timur,Jakarta Barat"
           />
         </label>
 
         {/* Name */}
         <label className="block">
-          <span className="text-gray-700">Name:</span>
+          <span className="text-gray-700">Nama Barang Yang Di jual:</span>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            placeholder="Tulis nama barang"
           />
         </label>
 
@@ -295,49 +300,55 @@ const EditBarang = () => {
             name="nomortelepon"
             value={formData.nomortelepon}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            placeholder="Tulis nomor seperti ini +6212345678"
           />
         </label>
 
         {/* Price */}
         <label className="block">
-          <span className="text-gray-700">Price:</span>
+          <span className="text-gray-700">Harga Barang:</span>
           <input
-            type="text"
+            type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            placeholder="Tulis nomor seperti ini 1000000"
           />
         </label>
 
         {/* Status */}
         <label className="block">
-          <span className="text-gray-700">Status:</span>
-          <input
-            type="text"
+          <span className="text-gray-700">Status Barang:</span>
+          <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
-          />
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg"
+          >
+            <option value="TERSEDIA">TERSEDIA</option>
+            <option value="HABIS">HABIS</option>
+          </select>
         </label>
 
         {/* Title */}
         <label className="block">
-          <span className="text-gray-700">Title:</span>
-          <input
+          <span className="text-gray-700">Deskripsi(Opsional):</span>
+          <textarea
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            style={{ minHeight: "200px" }}
+            placeholder="Stok terbatas like new "
           />
         </label>
 
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          className="bg-blue-500 w-full text-white py-4  px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 "
         >
           {loading ? "Loading..." : "Edit Barang"}
         </button>

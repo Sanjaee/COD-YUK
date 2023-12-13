@@ -6,13 +6,15 @@ import Skeleton from "react-loading-skeleton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../Styles/Slider.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const CustomPrevArrow = ({ onClick, ...rest }) => {
   const { currentSlide, slideCount, ...buttonProps } = rest;
 
   return (
     <button onClick={onClick} {...buttonProps} className="custom-prev-arrow">
-      &#x2190;
+      <FontAwesomeIcon icon={faArrowLeft} />
     </button>
   );
 };
@@ -22,7 +24,7 @@ const CustomNextArrow = ({ onClick, ...rest }) => {
 
   return (
     <button onClick={onClick} {...buttonProps} className="custom-next-arrow">
-      &#8594;
+      <FontAwesomeIcon icon={faArrowRight} />
     </button>
   );
 };
@@ -44,7 +46,7 @@ const SliderHeading = () => {
       const timeoutId = setTimeout(() => {
         setSliderData(sliderItems);
         setLoading(false);
-      }, 3000);
+      }, 700);
 
       return () => {
         clearTimeout(timeoutId);
