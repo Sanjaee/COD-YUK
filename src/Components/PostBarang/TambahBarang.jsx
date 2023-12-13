@@ -133,79 +133,8 @@ const TambahBarang = () => {
 
   return (
     <div className="max-w-md mx-auto my-8 p-6 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Add Product</h2>
+      <h2 className="text-2xl font-semibold mb-4">Posting Product</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <label className="block">
-          <span className="text-gray-700">About:</span>
-          <input
-            type="text"
-            name="about"
-            onChange={handleChange}
-            className="form-input mt-1 block w-full"
-          />
-        </label>
-
-        <label className="block">
-          <span className="text-gray-700">Date:</span>
-          <input
-            type="text"
-            name="date"
-            onChange={handleChange}
-            className="form-input mt-1 block w-full"
-          />
-        </label>
-
-        <label className="block">
-          <span className="text-gray-700">Image:</span>
-          <input
-            type="file"
-            name="image"
-            onChange={handleChange}
-            className="form-input mt-1 block w-full"
-          />
-          {image && (
-            <img
-              src={imagePreview}
-              alt="Selected"
-              className="mt-2 max-w-full h-auto"
-            />
-          )}
-        </label>
-
-        <label className="block">
-          <span className="text-gray-700">Image List :</span>
-          <input
-            type="file"
-            name="imageList"
-            onChange={handleChange}
-            className="form-input mt-1 block w-full p-3"
-            multiple
-          />
-          {imageListPreview.length > 0 && (
-            <div className="mt-2 flex flex-wrap">
-              {imageListPreview.map((preview, index) => (
-                <img
-                  key={index}
-                  src={preview}
-                  alt={`Selected ${index + 2}`}
-                  className="max-w-full h-auto mr-2 mb-2"
-                />
-              ))}
-            </div>
-          )}
-        </label>
-
-        <label className="block">
-          <span className="text-gray-700">Location:</span>
-          <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            className="form-input mt-1 block w-full"
-          />
-        </label>
-
         <label className="block">
           <span className="text-gray-700">Name:</span>
           <input
@@ -213,7 +142,7 @@ const TambahBarang = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg"
           />
         </label>
 
@@ -224,8 +153,69 @@ const TambahBarang = () => {
             name="nomortelepon"
             value={formData.nomortelepon}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg"
           />
+        </label>
+
+        <label className="block">
+          <span className="text-gray-700">Location:</span>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg"
+          />
+        </label>
+
+        <label className="block">
+          <span className="text-gray-700">Tanggal:</span>
+          <input
+            type="date"
+            name="date"
+            onChange={handleChange}
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg"
+          />
+        </label>
+
+        <label className="block">
+          <span className="text-gray-700">Image:</span>
+          <input
+            type="file"
+            name="image"
+            onChange={handleChange}
+            className="form-input mt-1 block w-full "
+          />
+          {image && (
+            <img
+              src={imagePreview}
+              alt="Selected"
+              className="mt-2 max-w-full h-auto mx-auto border-2 border-gray-600 p-2"
+            />
+          )}
+        </label>
+
+        <label className="block">
+          <span className="text-gray-700">Image List :</span>
+          <input
+            type="file"
+            name="imageList"
+            onChange={handleChange}
+            className="form-input mt-1 block w-full"
+            multiple
+          />
+          {imageListPreview.length > 0 && (
+            <div className="mt-2 flex flex-wrap">
+              {imageListPreview.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`Selected ${index + 2}`}
+                  className="max-w-full h-auto  mx-auto border-2 border-gray-600 p-2"
+                />
+              ))}
+            </div>
+          )}
         </label>
 
         <label className="block">
@@ -235,7 +225,7 @@ const TambahBarang = () => {
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg"
           />
         </label>
 
@@ -246,26 +236,47 @@ const TambahBarang = () => {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg"
           />
         </label>
 
         <label className="block">
-          <span className="text-gray-700">Title:</span>
-          <input
+          <span className="text-gray-700 font-bold">
+            {" "}
+            Catatan/Sepesifikasi barang (Opsional):
+          </span>
+          <textarea
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            style={{ minHeight: "200px" }}
+            placeholder="Contoh : Boleh Nego sampai jadi.. "
+          />
+        </label>
+
+        <label className="block">
+          <span className="text-gray-700 font-bold">
+            Deskripsi,Kondisi,Catatan,Spesifikasi,Detail Barang:
+          </span>
+          <textarea
+            type="text"
+            name="about"
+            value={formData.about}
+            rows="auto"
+            onChange={handleChange}
+            className="form-input mt-1 block w-full border p-2 border-black rounded-lg resize-none"
+            style={{ minHeight: "200px" }}
+            placeholder="Contoh : RTX 3060 12GB MSI VENTU  GARANSI SAMPAI OCTOBER 2024 BY AAA  ADEM, NORMAL, LENGKAP, NO MINUS UDAH CO BURUAN DAH!"
           />
         </label>
 
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          className="bg-blue-500 w-full text-white py-3 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         >
-          {loading ? "Loading..." : "Add Barang"}
+          {loading ? "Loading..." : "Posting Barang"}
         </button>
         <NotifProfile />
       </form>

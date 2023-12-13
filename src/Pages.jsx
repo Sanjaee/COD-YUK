@@ -4,7 +4,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home } from "./Pages/Home";
 import { About } from "./Pages/About";
-import { Service } from "./Pages/Service";
+import Service from "./Pages/Service";
 import DetailProducts from "./Pages/DetailProducts";
 
 import Login from "./Pages/Login";

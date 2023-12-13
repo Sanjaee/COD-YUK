@@ -91,6 +91,9 @@ export const Profile = () => {
         ) : (
           <TambahBarang onBarangAdded={() => setBarangAdded(true)} />
         )}
+        <div className=" items-start mb-11 font-bold text-2xl">
+          <Link to="/">&larr; Kembali</Link>
+        </div>
 
         <div className="mt-6">
           <button
