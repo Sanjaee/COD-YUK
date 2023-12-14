@@ -11,6 +11,8 @@ const Products = () => {
   const [kontrakan, setKontrakan] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // ...
+
   useEffect(() => {
     const fetchData = async () => {
       const kontrakanCollection = collection(db, "Products");
@@ -19,7 +21,13 @@ const Products = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setKontrakan(kontrakanData);
+
+      // Shuffle the kontrakanData array
+      const shuffledKontrakanData = kontrakanData.sort(
+        () => Math.random() - 0.5
+      );
+
+      setKontrakan(shuffledKontrakanData);
 
       // Set up a real-time listener for updates
       const unsubscribe = onSnapshot(kontrakanCollection, (querySnapshot) => {
@@ -27,7 +35,7 @@ const Products = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setKontrakan(updatedKontrakanData);
+        setKontrakan(updatedKontrakanData.sort(() => Math.random() - 0.5));
       });
 
       // Make sure to unsubscribe when the component unmounts
@@ -38,6 +46,8 @@ const Products = () => {
 
     fetchData();
   }, []);
+
+  // ...
 
   const formatCurrency = (price) => {
     return new Intl.NumberFormat("id-ID", {
@@ -68,7 +78,7 @@ const Products = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className=" text-sm font-bold  ml-2 mt-4">
+          <div className=" text-sm font-bold  ml-2 mt-4 lg:texxl">
             Tersedia: {filteredKontrakan.length} Barang
           </div>
         </div>

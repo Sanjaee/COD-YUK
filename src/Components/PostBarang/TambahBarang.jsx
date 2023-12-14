@@ -136,7 +136,7 @@ const TambahBarang = () => {
       <h2 className="text-2xl font-semibold mb-4">Posting Product</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <label className="block">
-          <span className="text-gray-700">Name:</span>
+          <span className="text-gray-700">Nama Barang Yang Di jual::</span>
           <input
             type="text"
             name="name"
@@ -147,7 +147,7 @@ const TambahBarang = () => {
         </label>
 
         <label className="block">
-          <span className="text-gray-700">Nomor Telepon:</span>
+          <span className="text-gray-700">Nomor WhatsApp:</span>
           <input
             type="text"
             name="nomortelepon"
@@ -158,7 +158,7 @@ const TambahBarang = () => {
         </label>
 
         <label className="block">
-          <span className="text-gray-700">Location:</span>
+          <span className="text-gray-700">Lokasi COD/Tempat Jual :</span>
           <input
             type="text"
             name="location"
@@ -179,7 +179,7 @@ const TambahBarang = () => {
         </label>
 
         <label className="block">
-          <span className="text-gray-700">Image:</span>
+          <span className="text-gray-700">Thumbnail Barang:</span>
           <input
             type="file"
             name="image"
@@ -196,7 +196,7 @@ const TambahBarang = () => {
         </label>
 
         <label className="block">
-          <span className="text-gray-700">Image List :</span>
+          <span className="text-gray-700">Detail Barang :</span>
           <input
             type="file"
             name="imageList"
@@ -219,7 +219,7 @@ const TambahBarang = () => {
         </label>
 
         <label className="block">
-          <span className="text-gray-700">Price:</span>
+          <span className="text-gray-700">Harga Barang:</span>
           <input
             type="text"
             name="price"
@@ -230,7 +230,7 @@ const TambahBarang = () => {
         </label>
 
         <label className="block">
-          <span className="text-gray-700">Status:</span>
+          <span className="text-gray-700">Status Barang:</span>
           <input
             type="text"
             name="status"
@@ -258,7 +258,7 @@ const TambahBarang = () => {
 
         <label className="block">
           <span className="text-gray-700 font-bold">
-            Deskripsi,Kondisi,Catatan,Spesifikasi,Detail Barang:
+            Deskripsi,Kondisi,Catatan,Spesifikasi:
           </span>
           <textarea
             type="text"
