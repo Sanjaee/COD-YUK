@@ -8,8 +8,8 @@ import Service from "./Pages/Service";
 import DetailProducts from "./Pages/DetailProducts";
 
 import Login from "./Pages/Login";
-import Register from "./Pages/Register";
 import { Profile } from "./Pages/Profile";
+import Register from "./Pages/Register";
 
 const router = createBrowserRouter([
   {

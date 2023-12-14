@@ -108,9 +108,10 @@ const Payment = () => {
             </ul>
           </div>
           <h1 className=" font-bold text-red-500 mt-12">
-            Estimasi Proses Kita Usahakan Secepatnya Minimal 12 Jam - Maximal
-            2x24 Jam **Catatan Penting!!! : SESUDAH PESAN MOHON JANGAN MEMBAYAR
-            TERLEBIH DAHULU SEBELUM DIKONFIRASI**{" "}
+            Kami hanya menyediakan jasa layanan untuk menjual barang dengan COD
+            2x24 Jam **Catatan Penting!!! : TRANSAKSI DI LUAR TANGGUNG JAWAB
+            ADMIN KARENA SISTEM COD HARUS BERTEMU DENGAN PENJUAL DAN PEMBELI
+            DENGAN WILAYAH MASING-MASING**{" "}
           </h1>
         </div>
         {/* card 2 */}

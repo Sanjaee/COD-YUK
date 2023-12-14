@@ -4,7 +4,7 @@ import { onSnapshot } from "firebase/firestore";
 import { db } from "../Api/Firebase";
 import "../Styles/Products.css";
 import { Link } from "react-router-dom";
-import { faStar, faMapMarker } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Products = () => {
@@ -107,11 +107,7 @@ const Products = () => {
                   <p className="store-card-price">
                     {formatCurrency(item.price)}
                   </p>
-                  <div className="rating">
-                    {Array.from({ length: item.rating }, (_, index) => (
-                      <FontAwesomeIcon icon={faStar} key={index} />
-                    ))}
-                  </div>
+
                   <p className="store-card-description">{item.date}</p>
                 </div>
               </div>

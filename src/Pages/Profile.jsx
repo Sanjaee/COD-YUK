@@ -54,19 +54,21 @@ export const Profile = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    // Clear all data from local storage and redirect to the home page
-    localStorage.clear();
-    navigate("/");
+    const confirmLogout = window.confirm("Apa Anda yakin ingin logout?");
+    if (confirmLogout) {
+      localStorage.clear();
+      navigate("/");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
+          <div className=" items-start mb-11 font-bold">
+            <Link to="/">&larr; Kembali</Link>
+          </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            <div className=" items-start mb-11 font-bold">
-              <Link to="/">&larr; Kembali</Link>
-            </div>
             Profile
           </h2>
         </div>
@@ -91,6 +93,7 @@ export const Profile = () => {
         ) : (
           <TambahBarang onBarangAdded={() => setBarangAdded(true)} />
         )}
+
         <div className=" items-start mb-11 font-bold text-2xl">
           <Link to="/">&larr; Kembali</Link>
         </div>

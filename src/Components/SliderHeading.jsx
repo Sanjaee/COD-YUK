@@ -61,7 +61,7 @@ const SliderHeading = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 1000,
+    speed: 1500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -85,7 +85,7 @@ const SliderHeading = () => {
                   <img
                     src={item.image}
                     alt="Slider"
-                    className="max-w-full h-auto rounded-lg p-1"
+                    className="max-w-full h-auto rounded-xl p-1"
                   />
                 </div>
               ))}
