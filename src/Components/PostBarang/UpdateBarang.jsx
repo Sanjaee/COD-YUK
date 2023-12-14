@@ -336,7 +336,7 @@ const EditBarang = () => {
 
         <label className="block">
           <span className="text-gray-700 font-bold">
-            Deskripsi,Kondisi,Catatan,Spesifikasi,Barang:
+            Deskripsi,Kondisi,Catatan,Spesifikasi:
           </span>
           <textarea
             type="text"
