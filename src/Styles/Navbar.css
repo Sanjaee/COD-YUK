@@ -28,7 +28,7 @@ nav ul {
   align-items: center;
   position: fixed;
   background-color: #f3f3f3;
-  z-index: 999;
+  z-index: 99;
 }
 
 nav li {

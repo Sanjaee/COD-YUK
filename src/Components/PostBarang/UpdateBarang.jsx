@@ -42,7 +42,6 @@ const EditBarang = () => {
         if (productData) {
           setFormData(productData);
 
-          // Modify this part to correctly form the image URLs
           const imageUrls = await Promise.all(
             productData.imageList.map(async (imageName) => {
               try {
@@ -100,7 +99,7 @@ const EditBarang = () => {
       const storageRef = ref(storage, `images/${file.name}`);
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
-      console.log("File uploaded successfully:", downloadURL);
+      console.log("File Update successfully:", downloadURL);
       return downloadURL;
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -117,7 +116,6 @@ const EditBarang = () => {
 
       if (!userId) {
         console.error("User ID not found in local storage");
-        // Redirect the user to the login page or handle the case where userId is not defined
         return;
       }
 
@@ -127,12 +125,10 @@ const EditBarang = () => {
       let imageUrl = null;
       let imageListUrls = [];
 
-      // Upload new image if selected
       if (image) {
         imageUrl = await uploadFile(image);
       }
 
-      // Upload new imageList if selected
       if (imageList.length > 0) {
         imageListUrls = await Promise.all(
           imageList.map((file) => uploadFile(file))
@@ -141,9 +137,9 @@ const EditBarang = () => {
 
       const updatedFormData = {
         ...formData,
-        image: imageUrl || formData.image, // Use existing image URL if not updated
+        image: imageUrl || formData.image,
         imageList:
-          imageListUrls.length > 0 ? imageListUrls : formData.imageList, // Use existing imageList if not updated
+          imageListUrls.length > 0 ? imageListUrls : formData.imageList,
       };
 
       const productDocSnapshot = await getDoc(productDocRef);
@@ -165,14 +161,41 @@ const EditBarang = () => {
     } catch (error) {
       console.error("Error updating document: ", error);
     } finally {
-      setLoading(false); // Set loading back to false after the operation is completed
+      setLoading(false);
     }
   };
   return (
     <div className="max-w-md mx-auto my-8 p-6 bg-white rounded shadow-md">
+      <button
+        onClick={() => {
+          const formBottom = document.getElementById("formBottom");
+          formBottom.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }}
+        className="fixed z-10 bottom-6 right-6 mb-20 bg-green-500 w-12 h-12 flex items-center justify-center text-white rounded-full hover:bg-green-600 focus:outline-none focus:shadow-outline-green active:bg-green-800"
+      >
+        &#8681;
+      </button>
+
       <h2 className="text-2xl font-semibold mb-4">Update Product</h2>
+
+      <button
+        onClick={() => {
+          const formTop = document.getElementById("formTop");
+          formTop.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+          });
+        }}
+        className="fixed z-10 top-6 right-6 mt-20 bg-blue-500 w-12 h-12 flex items-center justify-center text-white rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+      >
+        &#8679;
+      </button>
+
       <form onSubmit={handleSubmit} className="space-y-4">
-        <label className="block">
+        <label className="block" id="formTop">
           <span className="text-gray-700 font-bold">
             Nama Barang Yang Di jual:
           </span>
@@ -334,7 +357,7 @@ const EditBarang = () => {
           />
         </label>
 
-        <label className="block">
+        <label className="block" id="formBottom">
           <span className="text-gray-700 font-bold">
             Deskripsi,Kondisi,Catatan,Spesifikasi:
           </span>
