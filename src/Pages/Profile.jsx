@@ -15,6 +15,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   const [barangAdded, setBarangAdded] = useState(false);
   const [userProduct, setUserProduct] = useState(null);
+  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,11 +55,17 @@ export const Profile = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Apa Anda yakin ingin logout?");
-    if (confirmLogout) {
-      localStorage.clear();
-      navigate("/");
-    }
+    setShowLogoutConfirmation(true);
+  };
+
+  const confirmLogout = () => {
+    // Clear local storage and navigate to the home page
+    localStorage.clear();
+    navigate("/");
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutConfirmation(false);
   };
 
   return (
@@ -106,6 +113,29 @@ export const Profile = () => {
             Logout
           </button>
         </div>
+
+        {/* Logout Confirmation Modal */}
+        {showLogoutConfirmation && (
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div className="bg-white p-5 rounded-md">
+              <p>Are you sure you want to logout?</p>
+              <div className="mt-4 flex justify-end">
+                <button
+                  onClick={confirmLogout}
+                  className="mr-2 text-white bg-indigo-600 hover:bg-indigo-700 py-2 px-4 rounded-md"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={cancelLogout}
+                  className="text-gray-600 hover:text-gray-700 py-2 px-4 rounded-md"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
